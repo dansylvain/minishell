@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 08:59:03 by dan               #+#    #+#             */
-/*   Updated: 2024/01/23 16:13:28 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/23 16:22:46 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ void	exec_env(char *envp[], char **command_tab);
 int		command_is_builtin(char *command, char *envp[]);
 void	exec_pwd(void);
 int		exec_cd(char **command_tab);
+void	exec_echo(char **command_tab);
 
 #endif
