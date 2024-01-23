@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 08:59:03 by dan               #+#    #+#             */
-/*   Updated: 2024/01/22 19:47:36 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/23 15:59:28 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,8 @@ void	display_error(char *str);
 void	free_data(t_Data *data);
 void	close_minishell(t_Data *data);
 void	exec_env(char *envp[]);
-int	command_is_builtin(char *command, char *envp[]);
-void	exec_pwd();
-void	exec_cd(char **command_tab);
-
-
-
+int		command_is_builtin(char *command, char *envp[]);
+void	exec_pwd(void);
+int		exec_cd(char **command_tab);
 
 #endif

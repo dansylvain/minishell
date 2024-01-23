@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/22 19:49:01 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/23 15:58:01 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	main(int argc, char **argv, char *envp[])
 
 void	free_command_tab(char **command_tab)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (command_tab[i])
 		free(command_tab[i++]);
@@ -50,7 +50,7 @@ void	free_command_tab(char **command_tab)
  *========================================================================**/
 int	command_is_builtin(char *command, char *envp[])
 {
-	char **command_tab;
+	char	**command_tab;
 
 	command_tab = ft_split(command, ' ');
 	if (!ft_strncmp(command_tab[0], "env", 4) && command_tab[1] == NULL)
