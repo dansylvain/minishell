@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 17:09:58 by dan               #+#    #+#             */
-/*   Updated: 2024/01/23 18:19:49 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/23 19:10:17 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	exec_unset(char *envp[], char **command_tab)
 		j = 0;
 		while (command_tab[j])
 		{
-			if ((!ft_strncmp(command_tab[j], envp[i], ft_strlen(command_tab[j])))
-				&& envp[i][ft_strlen(command_tab[j])] == '=')
+			if ((!ft_strncmp(command_tab[j], envp[i], ft_strlen
+						(command_tab[j]))) && envp[i][ft_strlen
+				(command_tab[j])] == '=')
 			{
 				unset_var(envp, i);
 				exec_unset(envp, command_tab);
