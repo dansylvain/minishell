@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/23 18:30:32 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/23 18:59:05 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	command_is_builtin(char *command, char *envp[])
 	char	**command_tab;
 
 	command_tab = ft_split(command, ' ');
+	if (!command_tab[0])
+		return (free(command_tab), 1);
 	if (!ft_strncmp(command_tab[0], "echo", 5))
 		exec_echo(command_tab);
 	if (!ft_strncmp(command_tab[0], "unset", 6))
