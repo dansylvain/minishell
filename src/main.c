@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/23 18:59:05 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/23 19:08:17 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	command_is_builtin(char *command, char *envp[])
 	if (!ft_strncmp(command_tab[0], "cd", 3))
 		exec_cd(command_tab);
 	if (!ft_strncmp(command_tab[0], "exit", 5))
-		return (ft_printf("exit\n"), 0);
+		return (free_command_tab(command_tab), ft_printf("exit\n"), 0);
 	free_command_tab(command_tab);
 	return (1);
 }
@@ -92,7 +92,7 @@ int	prompt_loop(t_Data *data, char *envp[])
 		if (command == NULL)
 			return (close_minishell(data), 1);
 		if (command_is_builtin(command, envp) == 0)
-			return (0);
+			return (free(command), close_minishell(data), 1);
 		free(command);
 	}
 	return (1);
