@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 08:06:28 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 08:50:09 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	main(int argc, char **argv, char *envp[])
 	t_Data	*data;
 
 	data = (t_Data *)malloc(sizeof(t_Data));
-	data->envp = envp;
+	if (!(data->envp = duplicate_envp(data, envp)))
+		return (display_error("Error\n"), free_data(data), 255);
 	rl_catch_signals = 0;
 	if (data == NULL)
-		return (display_error("Error\n"), 255);
+		return (display_error("Error\n"), free_data(data), 255);
 	if (argc != 1)
 		return (free_data(data), display_error("Usage: ./minishell\n"), 255);
 	handle_signals();
@@ -90,3 +91,21 @@ int	command_is_builtin(char *command, t_Data *data)
 	free_command_tab(command_tab);
 	return (1);
 }
+
+char	**duplicate_envp(t_Data *data, char *envp[])
+{
+	char	**envp_tab;
+	int		i;
+	
+	i = 0;
+	while (envp[i])
+		i++;
+	envp_tab = (char **)malloc(sizeof(char *) * i + 1);
+	if (envp_tab == NULL)
+		return (NULL);
+	envp_tab[i] = NULL;
+	while (--i >= 0)
+		envp_tab[i] = envp[i];	
+	return (envp_tab);
+}
+

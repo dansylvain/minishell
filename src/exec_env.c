@@ -6,13 +6,13 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 18:46:30 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 07:50:02 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 08:43:00 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exec_env(char *envp[], char **command_tab)
+void	exec_env(char **envp, char **command_tab)
 {
 	int	i;
 

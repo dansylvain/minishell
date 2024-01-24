@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 17:09:58 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 08:07:27 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 08:41:38 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exec_unset(char *envp[], char **command_tab)
 	while (envp[i])
 	{
 		j = 1;
-		while (command_tab[j])
+		while (command_tab[j] && ft_strncmp(envp[i], "_=", 2))
 		{
 			if ((!ft_strncmp(command_tab[j], envp[i], ft_strlen
 						(command_tab[j]))) && envp[i][ft_strlen
