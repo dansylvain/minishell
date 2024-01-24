@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 10:20:06 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 12:44:32 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	**duplicate_envp(t_Data *data, char *envp[])
 	i = 0;
 	while (envp[i])
 		i++;
-	envp_tab = (char **)malloc(sizeof(char *) * i + 1);
+	envp_tab = (char **)malloc(sizeof(char *) * (i + 1));
 	if (envp_tab == NULL)
 		return (NULL);
 	envp_tab[i] = NULL;

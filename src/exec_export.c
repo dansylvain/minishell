@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 09:08:19 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 12:40:18 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 12:54:36 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,11 @@ void	exec_export(char **command_tab, t_Data *data)
 	if (command_tab[1] == NULL)
 		while (temp_envp[i])
 			ft_printf("declare -x %s\n", envp_export_tab[i++]);
+	j = 0;
+	while (j > i)
+	{
+		free(temp_envp[j]);
+		j++;
+	}
+	free (temp_envp);
 }
