@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 08:57:07 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 10:20:06 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	command_is_builtin(char *command, t_Data *data)
 		exec_echo(command_tab);
 	if (!ft_strncmp(command_tab[0], "unset", 6))
 		exec_unset(data->envp, command_tab);
+	if (!ft_strncmp(command_tab[0], "export", 7))
+		exec_export(command_tab, data);
 	if (!ft_strncmp(command_tab[0], "env", 4))
 		exec_env(data->envp, command_tab);
 	if (!ft_strncmp(command_tab[0], "pwd", 4))
