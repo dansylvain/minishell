@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 08:50:09 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 08:57:07 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	main(int argc, char **argv, char *envp[])
 	t_Data	*data;
 
 	data = (t_Data *)malloc(sizeof(t_Data));
-	if (!(data->envp = duplicate_envp(data, envp)))
+	data->envp = duplicate_envp(data, envp);
+	if (!data->envp)
 		return (display_error("Error\n"), free_data(data), 255);
 	rl_catch_signals = 0;
 	if (data == NULL)
@@ -87,7 +88,7 @@ int	command_is_builtin(char *command, t_Data *data)
 	if (!ft_strncmp(command_tab[0], "cd", 3))
 		exec_cd(command_tab);
 	if (!ft_strncmp(command_tab[0], "exit", 5))
-		return (free_command_tab(command_tab), ft_printf("exit\n"), 0);
+		return (free_command_tab(command_tab), 0);
 	free_command_tab(command_tab);
 	return (1);
 }
@@ -96,7 +97,7 @@ char	**duplicate_envp(t_Data *data, char *envp[])
 {
 	char	**envp_tab;
 	int		i;
-	
+
 	i = 0;
 	while (envp[i])
 		i++;
@@ -105,7 +106,6 @@ char	**duplicate_envp(t_Data *data, char *envp[])
 		return (NULL);
 	envp_tab[i] = NULL;
 	while (--i >= 0)
-		envp_tab[i] = envp[i];	
+		envp_tab[i] = envp[i];
 	return (envp_tab);
 }
-
