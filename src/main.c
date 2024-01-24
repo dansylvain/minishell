@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/23 19:08:17 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 08:06:28 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ int	main(int argc, char **argv, char *envp[])
 {
 	t_Data	*data;
 
-	rl_catch_signals = 0;
 	data = (t_Data *)malloc(sizeof(t_Data));
+	data->envp = envp;
+	rl_catch_signals = 0;
 	if (data == NULL)
 		return (display_error("Error\n"), 255);
 	if (argc != 1)
@@ -31,44 +32,6 @@ int	main(int argc, char **argv, char *envp[])
 	if (prompt_loop(data, envp) == 0)
 		return (free_data(data), 255);
 	return (0);
-}
-
-void	free_command_tab(char **command_tab)
-{
-	int	i;
-
-	i = 0;
-	while (command_tab[i])
-		free(command_tab[i++]);
-	free(command_tab);
-}
-
-/**========================================================================
- *                           command_is_builtin
- * exit builtin implemented without extern function
- * 0 is returned, and the data struct is freed in calling function
- *========================================================================**/
-int	command_is_builtin(char *command, char *envp[])
-{
-	char	**command_tab;
-
-	command_tab = ft_split(command, ' ');
-	if (!command_tab[0])
-		return (free(command_tab), 1);
-	if (!ft_strncmp(command_tab[0], "echo", 5))
-		exec_echo(command_tab);
-	if (!ft_strncmp(command_tab[0], "unset", 6))
-		exec_unset(envp, command_tab);
-	if (!ft_strncmp(command_tab[0], "env", 4))
-		exec_env(envp, command_tab);
-	if (!ft_strncmp(command_tab[0], "pwd", 4))
-		exec_pwd();
-	if (!ft_strncmp(command_tab[0], "cd", 3))
-		exec_cd(command_tab);
-	if (!ft_strncmp(command_tab[0], "exit", 5))
-		return (free_command_tab(command_tab), ft_printf("exit\n"), 0);
-	free_command_tab(command_tab);
-	return (1);
 }
 
 /**========================================================================
@@ -91,9 +54,39 @@ int	prompt_loop(t_Data *data, char *envp[])
 		}
 		if (command == NULL)
 			return (close_minishell(data), 1);
-		if (command_is_builtin(command, envp) == 0)
+		if (command_is_builtin(command, data) == 0)
 			return (free(command), close_minishell(data), 1);
 		free(command);
 	}
+	return (1);
+}
+
+/**========================================================================
+ *                           command_is_builtin
+ * exit builtin implemented without extern function
+ * 0 is returned, and the data struct is freed in calling function
+ *========================================================================**/
+int	command_is_builtin(char *command, t_Data *data)
+{
+	char	**command_tab;
+
+	command_tab = ft_split(command, ' ');
+	if (!command_tab)
+		return (1);
+	if (!command_tab[0])
+		return (free(command_tab), 1);
+	if (!ft_strncmp(command_tab[0], "echo", 5))
+		exec_echo(command_tab);
+	if (!ft_strncmp(command_tab[0], "unset", 6))
+		exec_unset(data->envp, command_tab);
+	if (!ft_strncmp(command_tab[0], "env", 4))
+		exec_env(data->envp, command_tab);
+	if (!ft_strncmp(command_tab[0], "pwd", 4))
+		exec_pwd();
+	if (!ft_strncmp(command_tab[0], "cd", 3))
+		exec_cd(command_tab);
+	if (!ft_strncmp(command_tab[0], "exit", 5))
+		return (free_command_tab(command_tab), ft_printf("exit\n"), 0);
+	free_command_tab(command_tab);
 	return (1);
 }

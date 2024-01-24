@@ -6,7 +6,7 @@
 #    By: dan <dan@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 05:50:42 by dsylvain          #+#    #+#              #
-#    Updated: 2024/01/24 07:05:18 by dan              ###   ########.fr        #
+#    Updated: 2024/01/24 07:07:48 by dan              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -g -lreadline -lhistory -I/usr/include/readline
+RLFLAGS = -lreadline -lhistory -I/usr/include/readline
+
+CFLAGS = -g $(RLFLAGS)
 # -Wall -Wextra -Werror
 
 # Directories
