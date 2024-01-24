@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:04:56 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 12:44:32 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 13:28:03 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	main(int argc, char **argv, char *envp[])
 	t_Data	*data;
 
 	data = (t_Data *)malloc(sizeof(t_Data));
+	if (data == NULL)
+		return (display_error("Error\n"), free_data(data), 255);
 	data->envp = duplicate_envp(data, envp);
 	if (!data->envp)
 		return (display_error("Error\n"), free_data(data), 255);
 	rl_catch_signals = 0;
-	if (data == NULL)
-		return (display_error("Error\n"), free_data(data), 255);
 	if (argc != 1)
 		return (free_data(data), display_error("Usage: ./minishell\n"), 255);
 	handle_signals();
@@ -55,10 +55,11 @@ int	prompt_loop(t_Data *data, char *envp[])
 			add_history(command);
 		}
 		if (command == NULL)
-			return (close_minishell(data), 1);
+			return (free(command), close_minishell(data), 1);
 		if (command_is_builtin(command, data) == 0)
 			return (free(command), close_minishell(data), 1);
-		free(command);
+		if (command)
+			free(command);
 	}
 	return (1);
 }
@@ -72,6 +73,7 @@ int	command_is_builtin(char *command, t_Data *data)
 {
 	char	**command_tab;
 
+	command_tab = NULL;
 	command_tab = ft_split(command, ' ');
 	if (!command_tab)
 		return (1);
@@ -103,11 +105,16 @@ char	**duplicate_envp(t_Data *data, char *envp[])
 	i = 0;
 	while (envp[i])
 		i++;
-	envp_tab = (char **)malloc(sizeof(char *) * (i + 1));
+	envp_tab = (char **)ft_calloc((i + 1), sizeof(char *));
 	if (envp_tab == NULL)
 		return (NULL);
 	envp_tab[i] = NULL;
 	while (--i >= 0)
+	{
+		envp_tab[i] = (char *)ft_calloc((ft_strlen(envp[i]) + 1), sizeof(char));
+		if (envp_tab == NULL)
+			return (NULL);
 		envp_tab[i] = envp[i];
+	}
 	return (envp_tab);
 }

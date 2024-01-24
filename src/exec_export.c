@@ -6,13 +6,13 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 09:08:19 by dan               #+#    #+#             */
-/*   Updated: 2024/01/24 12:54:36 by dan              ###   ########.fr       */
+/*   Updated: 2024/01/24 13:06:20 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exec_export(char **command_tab, t_Data *data)
+int	exec_export(char **command_tab, t_Data *data)
 {
 	int i;
 	int j;
@@ -23,13 +23,26 @@ void	exec_export(char **command_tab, t_Data *data)
 	char **temp_envp;
 	
 	temp_envp = duplicate_envp(data, data->envp);
-
+	if (temp_envp == NULL)
+		return (0);
+	i = 0;
+	while (i < 100)
+	{
+		j = 0;
+		while (j < 500)
+		{
+			envp_export_tab[i][j++] = '\0';
+		}
+		i++;
+	}
+	
 	i = 0;
 	while (temp_envp[++i])
 		if (ft_strncmp(temp_envp[i], "_=", 2) == 0)
 			temp_envp[i] = NULL;
 	i = 0;
-	while (temp_envp[i] && temp_envp[++i + 1])
+	while (temp_envp[i] && temp_envp[i + 1])
+	{
 		if (ft_strncmp(temp_envp[i], temp_envp[i + 1], ft_strlen(temp_envp[i])) > 0)
 		{
 			temp = temp_envp[i];
@@ -37,6 +50,8 @@ void	exec_export(char **command_tab, t_Data *data)
 			temp_envp[i + 1] = temp;
 			i = -1;
 		}
+		i++;
+	}
 	i = 0;
 	while (temp_envp[i])
 	{
@@ -69,4 +84,5 @@ void	exec_export(char **command_tab, t_Data *data)
 		j++;
 	}
 	free (temp_envp);
+	return (1);
 }
